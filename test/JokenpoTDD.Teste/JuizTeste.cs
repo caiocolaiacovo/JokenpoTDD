@@ -1,5 +1,3 @@
-using System;
-using ExpectedObjects;
 using Moq;
 using Xunit;
 
