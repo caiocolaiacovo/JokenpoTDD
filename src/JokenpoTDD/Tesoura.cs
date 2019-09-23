@@ -1,18 +1,18 @@
 namespace JokenpoTDD
 {
-    public class Pedra : IJogada
+    public class Tesoura : IJogada
     {
-        public string Nome => "Pedra";
+        public string Nome => "Tesoura";
 
         public string NomeDaJogadaQueVenceEsta => throw new System.NotImplementedException();
 
-        public Pedra()
+        public Tesoura()
         {
         }
 
         public bool GanhaDe(IJogada jogada)
         {
-            return jogada.Nome.Equals("Tesoura");
+            return jogada.Nome.Equals("Papel");
         }
     }
 }

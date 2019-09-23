@@ -4,38 +4,37 @@ using Xunit;
 
 namespace JokenpoTDD.Teste
 {
-    public class PedraTeste
+    public class PapelTeste
     {
         [Fact]
         public void Deve_criar_uma_jogada()
         {
             var jogadaEsperada = new {
-                Nome = "Pedra"
+                Nome = "Papel"
             };
 
-            var jogada = new Pedra();
+            var jogada = new Papel();
 
             jogadaEsperada.ToExpectedObject().ShouldMatch(jogada);
         }
 
         [Fact]
-        public void Deve_ganhar_de_tesoura()
+        public void Deve_ganhar_de_pedra()
         {
-            var jogada = new Pedra();
-            var tesoura = new Mock<IJogada>();
-            tesoura.SetupGet(t => t.Nome).Returns("Tesoura");
+            var jogada = new Papel();
+            var pedra = new Pedra();
 
-            var ganhou = jogada.GanhaDe(tesoura.Object);
+            var ganhou = jogada.GanhaDe(pedra);
 
             Assert.True(ganhou);
         }
 
         [Theory]
-        [InlineData("Pedra")]
         [InlineData("Papel")]
+        [InlineData("Tesoura")]
         public void Nao_deve_ganhar_das_demais_jogadas(string nomeDaJogadaQueDeveVencer)
         {
-            var jogada = new Pedra();
+            var jogada = new Papel();
             var outraJogada = new Mock<IJogada>();
             outraJogada.SetupGet(t => t.Nome).Returns(nomeDaJogadaQueDeveVencer);
 
