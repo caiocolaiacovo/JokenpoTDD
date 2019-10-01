@@ -9,13 +9,9 @@ namespace JokenpoTDD.Teste
         [Fact]
         public void Deve_criar_uma_jogada()
         {
-            var jogadaEsperada = new {
-                Nome = "Papel"
-            };
-
             var jogada = new Papel();
 
-            jogadaEsperada.ToExpectedObject().ShouldMatch(jogada);
+            Assert.True(jogada is IJogada);
         }
 
         [Fact]
@@ -29,16 +25,24 @@ namespace JokenpoTDD.Teste
             Assert.True(ganhou);
         }
 
-        [Theory]
-        [InlineData("Papel")]
-        [InlineData("Tesoura")]
-        public void Nao_deve_ganhar_das_demais_jogadas(string nomeDaJogadaQueDeveVencer)
+        [Fact]
+        public void Nao_deve_ganhar_de_papel()
         {
             var jogada = new Papel();
-            var outraJogada = new Mock<IJogada>();
-            outraJogada.SetupGet(t => t.Nome).Returns(nomeDaJogadaQueDeveVencer);
+            var papel = new Papel();
 
-            var ganhou = jogada.GanhaDe(outraJogada.Object);
+            var ganhou = jogada.GanhaDe(papel);
+
+            Assert.False(ganhou);
+        }
+
+        [Fact]
+        public void Nao_deve_ganhar_de_tesoura()
+        {
+            var jogada = new Papel();
+            var tesoura = new Tesoura();
+
+            var ganhou = jogada.GanhaDe(tesoura);
 
             Assert.False(ganhou);
         }

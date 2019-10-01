@@ -7,39 +7,42 @@ namespace JokenpoTDD.Teste
     public class TesouraTeste
     {
         [Fact]
-        public void Deve_criar_uma_jogada()
+        public void Deve_ser_uma_jogada()
         {
-            var jogadaEsperada = new {
-                Nome = "Tesoura"
-            };
-
             var jogada = new Tesoura();
 
-            jogadaEsperada.ToExpectedObject().ShouldMatch(jogada);
+            Assert.True(jogada is IJogada);
         }
 
         [Fact]
         public void Deve_ganhar_de_papel()
         {
             var jogada = new Tesoura();
-            var papel = new Mock<IJogada>();
-            papel.SetupGet(t => t.Nome).Returns("Papel");
+            var papel = new Papel();
 
-            var ganhou = jogada.GanhaDe(papel.Object);
+            var ganhou = jogada.GanhaDe(papel);
 
             Assert.True(ganhou);
         }
 
-        [Theory]
-        [InlineData("Tesoura")]
-        [InlineData("Pedra")]
-        public void Nao_deve_ganhar_das_demais_jogadas(string nomeDaJogadaQueDeveVencer)
+        [Fact]
+        public void Nao_deve_ganhar_de_tesoura()
         {
             var jogada = new Tesoura();
-            var outraJogada = new Mock<IJogada>();
-            outraJogada.SetupGet(t => t.Nome).Returns(nomeDaJogadaQueDeveVencer);
+            var tesoura = new Tesoura();
 
-            var ganhou = jogada.GanhaDe(outraJogada.Object);
+            var ganhou = jogada.GanhaDe(tesoura);
+
+            Assert.False(ganhou);
+        }
+
+        [Fact]
+        public void Nao_deve_ganhar_de_pedra()
+        {
+            var jogada = new Tesoura();
+            var pedra = new Pedra();
+
+            var ganhou = jogada.GanhaDe(pedra);
 
             Assert.False(ganhou);
         }

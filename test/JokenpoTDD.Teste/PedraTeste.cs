@@ -1,4 +1,3 @@
-using ExpectedObjects;
 using Moq;
 using Xunit;
 
@@ -7,39 +6,42 @@ namespace JokenpoTDD.Teste
     public class PedraTeste
     {
         [Fact]
-        public void Deve_criar_uma_jogada()
+        public void Deve_ser_uma_jogada()
         {
-            var jogadaEsperada = new {
-                Nome = "Pedra"
-            };
-
             var jogada = new Pedra();
 
-            jogadaEsperada.ToExpectedObject().ShouldMatch(jogada);
+            Assert.True(jogada is IJogada);
         }
 
         [Fact]
         public void Deve_ganhar_de_tesoura()
         {
             var jogada = new Pedra();
-            var tesoura = new Mock<IJogada>();
-            tesoura.SetupGet(t => t.Nome).Returns("Tesoura");
+            var tesoura = new Tesoura();
 
-            var ganhou = jogada.GanhaDe(tesoura.Object);
+            var ganhou = jogada.GanhaDe(tesoura);
 
             Assert.True(ganhou);
         }
 
-        [Theory]
-        [InlineData("Pedra")]
-        [InlineData("Papel")]
-        public void Nao_deve_ganhar_das_demais_jogadas(string nomeDaJogadaQueDeveVencer)
+        [Fact]
+        public void Nao_deve_ganhar_de_pedra()
         {
             var jogada = new Pedra();
-            var outraJogada = new Mock<IJogada>();
-            outraJogada.SetupGet(t => t.Nome).Returns(nomeDaJogadaQueDeveVencer);
+            var pedra = new Pedra();
 
-            var ganhou = jogada.GanhaDe(outraJogada.Object);
+            var ganhou = jogada.GanhaDe(pedra);
+
+            Assert.False(ganhou);
+        }
+
+        [Fact]
+        public void Nao_deve_ganhar_de_papel()
+        {
+            var jogada = new Pedra();
+            var papel = new Papel();
+
+            var ganhou = jogada.GanhaDe(papel);
 
             Assert.False(ganhou);
         }
