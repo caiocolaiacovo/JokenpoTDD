@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore src/JokenpoTDD/JokenpoTDD.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal src/JokenpoTDD/JokenpoTDD.csproj
+      run: dotnet test --verbosity normal test/JokenpoTDD.Teste/JokenpoTDD.Teste.csproj
